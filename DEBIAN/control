@@ -1,8 +1,8 @@
 Package: liveinstall
-Version: 1.0.0
+Version: 1.0.1
 Architecture: all
 Maintainer: Robert Key robkey@mighty.co.za
-Depends: subversion, git, editfstab, init-linux
+Depends: subversion, git, editfstab, initialise-linux
 Section: myown
 Priority: optional
-Description: liveinstall installs subversion, git, editfstab, init-linux and setsup the chroot environment. Installed by makelive.
+Description: liveinstall installs subversion, git, editfstab, initialise-linux and setsup the chroot environment. Installed by makelive.
