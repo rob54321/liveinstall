@@ -50,8 +50,8 @@ exitonerror() {
 	fi
 }
 # function to mount debhome and setup link for repository
-# setupdebhome DEBHOMEDEV MOUNTSTATUS
-setupdebhome() {
+# mountdebhome DEBHOMEDEV MOUNTSTATUS
+mountdebhome() {
 	if test ! -d "/mnt/$1"; then
 		mkdir "/mnt/$1"
 	fi
@@ -121,7 +121,7 @@ done
 
 # make the mount directory for the debhome device
 # this must be done first so apt update can be run
-setupdebhome "$DEBHOMEDEV" "$DEBHOMEMOUNTSTATUS"
+mountdebhome "$DEBHOMEDEV" "$DEBHOMEMOUNTSTATUS"
 
 # update repository
 apt update > /dev/null 2>&1
