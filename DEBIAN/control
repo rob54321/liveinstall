@@ -1,5 +1,5 @@
 Package: liveinstall
-Version: 1.1.2
+Version: 1.1.3
 Architecture: all
 Maintainer: Robert Key robkey@mighty.co.za
 Depends: subversion, git, editfstab, initialise-linux
