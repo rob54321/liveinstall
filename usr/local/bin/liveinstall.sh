@@ -3,25 +3,26 @@
 # but when ubuntu-mate is installed on the desktop
 # the features installed from this script are
 # also installed in the desktop.
-# it mounts the debhome repospitory at /mnt/debhomedev.
-# it links /mnt/debhomedev/debhome /mnt/debhome
-# it links /mnt/svndevice /mnt/svn
+
+# this script edits fstab
+# upgrades packages if the option is given
+# installs packages if the option is given
+# and sets up the editfstab.service so the live
+# system can edit it's fstab after each boot.
+# this is necessary with ubuntu live since
+# the fstab in the chroot environment is not copied
+# to the to the live system.
+# It also sets up multi-user.target
+# and sets the fonts in /etc/default/console-setup
+
+# debhome.sources and debhomepubkey.asc must be installed
+# before this script is run.This script liveinstall is a debian
+# package and installed my makelive.pl
 
 #########
 # debhome and svn must be on the dehomedevice.
 #########
 
-# so that /etc/apt/sources.list.d/debhome.list will 
-# find the packages in debhome.
-# and adds the public key to ubuntu
-# it does the upgrade if necessary
-# if there are packages to install, it installs them in the chroot environment
-# Note: /etc from host is bound to /etchost in chroot
-# this is done so /etchost/mtab can be used to determine
-# if debhomedev has been mounted rw or ro or not mounted in the host
-# if it is mounted rw or ro in the host, the mount in chroot must be the same.
-# if it is not mounted in the host, ro is prefered.
-#
 # updgrade and extra packages are passed as a command live arguments
 # to this script
 # liveinstall.sh "param1" "param2" "param3" "param4"
@@ -49,31 +50,6 @@ exitonerror() {
 		exit 1;
 	fi
 }
-# function to mount debhome and setup link for repository
-# mountdebhome DEBHOMEDEV MOUNTSTATUS
-mountdebhome() {
-	if test ! -d "/mnt/$1"; then
-		mkdir "/mnt/$1"
-	fi
-
-	#  mount the  device, using same status, ro rw as host
-	if test "$2" = "rw"; then
-		# deb home mounted rw
-		mount -w -L "$1" "/mnt/$1"
-		exitonerror $? "Could not mount $1 at /mnt/$1 rw"
-		echo "Mounted $1 rw at /mnt/$1"
-	else
-		# debhome mounted ro or not mounted
-		mount -r -L "$1" "/mnt/$1"
-		exitonerror $? "Could not mount $1 at /mnt/$1 ro"
-		echo "Mounted $1 ro at /mnt/$1"
-	fi
-	# make the link for the debian repository
-	if test ! -L "/mnt/debhome"; then
-		ln -s "/mnt/$1/debhome" "/mnt/debhome"
-	fi
-}
-
 # function to setup editfstab service
 # which will run after every boot
 # to edit the fstab file in the live system.
@@ -118,42 +94,6 @@ do
 		\?) usage;;
 	esac
 done
-
-# make the mount directory for the debhome device
-# this must be done first so apt update can be run
-mountdebhome "$DEBHOMEDEV" "$DEBHOMEMOUNTSTATUS"
-
-# update repository
-apt update > /dev/null 2>&1
-exitonerror $? "apt update ended with error"
-
-# install subversion if it is not installed
-dpkg-query -s subversion >/dev/null 2>&1
-if test $? -ne 0; then
-	apt -y install subversion
-	exitonerror $? "Could not install subversion"
-fi
-
-# install git if it is not installed
-dpkg-query -s git >/dev/null 2>&1 || apt -y install git
-
-# install init-linux if it is not installed
-if test ! -x /usr/local/bin/init-linux; then
-	rm -rf /tmp/init
-	git clone -v -b dev /mnt/ad64/git/initialise-linux.git /tmp/init
-	exitonerror $? "Could not clone init-linux"
-	mv -v /tmp/init/init-linux /usr/local/bin/
-	exitonerror $? "Could not move init-linux to /usr/local/bin"
-fi
-
-# install editfstab if it is not installed
-if test ! -x /usr/local/bin/editfstab; then
-	rm -rf /tmp/editfstab
-	git clone -v -b dev /mnt/ad64/git/editfstab.git /tmp/editfstab
-	exitonerror $? "Could not clone editfstab"
-	mv -v /tmp/editfstab/editfstab /usr/local/bin
-	exitonerror $? "Could not move editfstab to /usr/local/bin"
-fi
 
 # make the directories for /mnt
 editfstab -d
@@ -232,9 +172,6 @@ fi
 # vmlinuz and initrd are already in the casper directory
 rm -v -f /boot/vmlinuz-*-generic
 rm -v -f /boot/initrd.img-*-generic
-
-umount "/mnt/$DEBHOMEDEV"
-exitonerror $? "Could not unmount /mnt/$DEBHOMEDEV"
 
 # set boot to command line
 systemctl set-default multi-user.target
