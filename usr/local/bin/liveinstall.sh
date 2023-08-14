@@ -19,10 +19,6 @@
 # before this script is run.This script liveinstall is a debian
 # package and installed my makelive.pl
 
-#########
-# debhome and svn must be on the dehomedevice.
-#########
-
 # updgrade and extra packages are passed as a command live arguments
 # to this script
 # liveinstall.sh "param1" "param2" "param3" "param4"
@@ -72,7 +68,6 @@ editfstabservice() {
 }
 usage() {
 echo "-d debhomedevice"
-echo "-s debhome mount status, ro, rw, none"
 echo "-u for upgrade"
 echo "-p package list; p1 p2 .."
 exit 0;
@@ -87,7 +82,6 @@ while getopts d:s:up:h opt
 do
 	case ${opt} in
 		d) DEBHOMEDEV="${OPTARG}";;
-		s) DEBHOMEMOUNTSTATUS="${OPTARG}";;
 		u) UPGRADE="upgrade";;
 		p) PACKAGES="${OPTARG}";;
 		h) usage;;
