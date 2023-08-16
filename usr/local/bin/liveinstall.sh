@@ -178,7 +178,7 @@ setupcon --save >/dev/null 2>/dev/null
 
 #############################################
 # setup service to edit fstab after each boot in the live
-editfstabservice
+# editfstabservice
 
 #############################################
 
