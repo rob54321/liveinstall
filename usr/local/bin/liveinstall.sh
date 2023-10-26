@@ -21,11 +21,7 @@
 
 # updgrade and extra packages are passed as a command live arguments
 # to this script
-# liveinstall.sh "param1" "param2" "param3" "param4"
-# param1 is debhome device label
-# param2 is the status of the mount of debhome dev, ro, rw or not mounted
-# param3 can be "upgrade"|"" for no upgrade
-# param4 can be "pkg1 pkg2 ..."|"" for no packages
+# liveinstall.sh -u (upgrade) -p (packages) or none
 # the script exits with 1 if there was an error
 # otherwise it exits with 0.
 
@@ -38,11 +34,6 @@ exitonerror() {
 	if test $1 -ne 0; then
 		# display error string
 		echo "$2"
-		umount "/mnt/$DEBHOMEDEV"
-		if test $? -ne 0; then
-			echo "Could not umount $DEBHOMEDEV from /mnt/$DEBHOMEDEV"
-			exit 2;
-		fi
 		exit 1;
 	fi
 }
@@ -67,7 +58,6 @@ editfstabservice() {
 	systemctl enable editfstab
 }
 usage() {
-echo "-d debhomedevice"
 echo "-u for upgrade"
 echo "-p package list; p1 p2 .."
 exit 0;
@@ -78,10 +68,9 @@ export LC_ALL=C
 PACKAGES="";
 UPGRADE="";
 
-while getopts d:s:up:h opt
+while getopts up:h opt
 do
 	case ${opt} in
-		d) DEBHOMEDEV="${OPTARG}";;
 		u) UPGRADE="upgrade";;
 		p) PACKAGES="${OPTARG}";;
 		h) usage;;
