@@ -26,7 +26,12 @@
 # otherwise it exits with 0.
 
 # function to exit with status 1
-# the debhomedev is unmounted first
+# the directories /mnt/debhome and /mnt/svn
+# which must exist, are bound to svn and debhome.
+# they are deleted and replaced with links to svn and debhome
+# when unbinding takes place after liveinstall exits.
+
+###########################################################################
 # the rc code is passed as first parameter, no exit on 0, exit on 1, 2, 3..
 # second parameter is the error string
 exitonerror() {
