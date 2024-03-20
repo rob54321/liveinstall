@@ -83,9 +83,6 @@ do
 	esac
 done
 
-# make the directories for /mnt
-editfstab -d
-exitonerror $? "editfstab exited with error"
 
 # make the directory /dochroot to indicate
 # a do chroot was done.
@@ -96,6 +93,16 @@ if test -d /dochroot; then
 else
 	mkdir /dochroot
 fi
+
+# execute init-linux which will make user robert.
+# it must only be executed once, so if the file
+# /chroot/dochroot/initialise-linux exists
+# init-linux has already been run
+if test -f /dochroot/init-linux || /usr/local/bin/init-linux
+
+# make the directories for /mnt
+editfstab -d
+exitonerror $? "editfstab exited with error"
 
 # the key and debhome.sources was added by makelive.pl
 # check if full upgrade must be done
