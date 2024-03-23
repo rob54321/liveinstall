@@ -98,7 +98,9 @@ fi
 # it must only be executed once, so if the file
 # /chroot/dochroot/initialise-linux exists
 # init-linux has already been run
-if test -f /dochroot/init-linux || /usr/local/bin/init-linux
+# the -L switch is to indicate init-linux is being
+# run from liveinstall
+if test -f /dochroot/init-linux || /usr/local/bin/init-linux -L
 
 # make the directories for /mnt
 editfstab -d
