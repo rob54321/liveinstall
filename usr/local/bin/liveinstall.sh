@@ -100,7 +100,9 @@ fi
 # init-linux has already been run
 # the -L switch is to indicate init-linux is being
 # run from liveinstall
-if test -f /dochroot/init-linux || /usr/local/bin/init-linux -L
+if ! test -f /dochroot/init-linux; then
+	/usr/local/bin/init-linux -L
+fi
 
 # make the directories for /mnt
 editfstab -d
