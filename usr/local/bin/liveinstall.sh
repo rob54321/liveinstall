@@ -101,7 +101,24 @@ fi
 # the -L switch is to indicate init-linux is being
 # run from liveinstall
 if ! test -f /dochroot/init-linux; then
+	echo "======================================================================================"
+	echo "running init-linux -L"
+	echo "======================================================================================"
 	/usr/local/bin/init-linux -L
+	# check return status
+	RC=$?
+
+	test ${RC} -eq 0 || exitonerror ${RC} "init-linux exited with error"
+	echo "======================================================================================"
+	echo "finished running init-linux -L"
+	echo "======================================================================================"
+
+else
+	# /dochroot/init-linux exists
+	# init-linux has already run
+	echo "======================================================================================"
+	echo "init-linux has already been run"
+	echo "======================================================================================"
 fi
 
 # make the directories for /mnt
