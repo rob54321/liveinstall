@@ -189,8 +189,11 @@ fi
 rm -v -f /boot/vmlinuz-*-generic
 rm -v -f /boot/initrd.img-*-generic
 
+######################################################################
+# systemctl set-default is in init-linux which is run from makelive.pl
+######################################################################
 # set boot to command line
-systemctl set-default multi-user.target
+# systemctl set-default multi-user.target
 
 # setup console fonts
 sed -i -e 's/^FONTFACE=.*/FONTFACE=\"Terminus\"/' /etc/default/console-setup
