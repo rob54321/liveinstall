@@ -172,8 +172,9 @@ apt -y autoremove
 # and the /boot will not have a vmlinuz or initrd.
 # if /boot contains no vmlinuz and initrd.img then
 # the latest vmlinuz , initrd.img is on cdrom/casper
-
-if test -s /boot/vmlinuz; then
+# above is true for versions < 24.04
+# 24.04 and above the original vmlinuz and initrd must be used.
+if [[ -s /boot/vmlinuz && `cat /isoimage/version.txt` < "24.04" ]]; then
 	test -d /oldboot || mkdir /oldboot
 	cp -v -f -L /boot/vmlinuz /oldboot/vmlinuz
 	cp -v -f -L /boot/initrd.img /oldboot/initrd
