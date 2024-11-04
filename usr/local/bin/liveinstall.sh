@@ -188,8 +188,8 @@ fi
 # rm vmlinuz-xxxx-generic and initrd.img-xxxx-generic from the boot directory
 # they will take up space in filesystems.squashfs and not needed.
 # vmlinuz and initrd are already in the casper directory
-rm -v -f /boot/vmlinuz-*-generic
-rm -v -f /boot/initrd.img-*-generic
+# rm -v -f /boot/vmlinuz-*-generic
+# rm -v -f /boot/initrd.img-*-generic
 
 ######################################################################
 # systemctl set-default is in init-linux which is run from makelive.pl
