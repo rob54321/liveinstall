@@ -131,11 +131,11 @@ fi
 VERSION=`cat /isoimage/kernelversion.txt`
 dpkg-query -W linux-image-${VERSION}
 if test $? != 0; then
-	apt install linux-image-${VERSION} linux-modules-${VERSION} linux-headers-${VERSION} linux-modules-extra-${VERSION} -y
-	
+	apt install linux-image-${VERSION}-generic linux-modules-${VERSION}-generic linux-headers-${VERSION} linux-modules-extra-${VERSION}-generic -y
+
 	# also hold these packages so they do
 	# not get upgraded
-	apt-mark hold linux-image-${VERSION} linux-modules-${VERSION} linux-headers-${VERSION} linux-modules-extra-${VERSION}
+	apt-mark hold linux-image-${VERSION}-generic linux-modules-${VERSION}-generic linux-headers-${VERSION} linux-modules-extra-${VERSION}-generic
 fi
 
 # make the directories for /mnt
