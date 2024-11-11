@@ -121,6 +121,23 @@ else
 	echo "======================================================================================"
 fi
 
+# install the kernel and modules for the default kernel in the cdrom.
+# the verssion is in the chroot environment /isoimagekernelversion.txt
+# this is done so the dpkg status file accurately depicts the
+# file installed.
+# only install if it is not already installed.
+# there could be multiple runs of this fiile
+
+VERSION=`cat /isoimage/kernelversion.txt`
+dpkg-query -W linux-image-${VERSION}
+if test $? != 0; then
+	apt install linux-image-${VERSION} linux-modules-${VERSION} linux-headers-${VERSION} linux-modules-extra-${VERSION} -y
+	
+	# also hold these packages so they do
+	# not get upgraded
+	apt-mark hold linux-image-${VERSION} linux-modules-${VERSION} linux-headers-${VERSION} linux-modules-extra-${VERSION}
+fi
+
 # make the directories for /mnt
 editfstab -d
 exitonerror $? "editfstab exited with error"
