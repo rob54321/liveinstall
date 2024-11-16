@@ -153,9 +153,9 @@ if test "${UPGRADE}" = "upgrade"; then
 	# can be copied to a temp directory oldboot
 	# then makelive can copy to the casper directory
 	# when the disk is mounted
-	apt -y install linux-image-generic
+	# apt -y install linux-image-generic
 	# check for success
-	exitonerror $? "Could not install linux-image-generic"
+	# exitonerror $? "Could not install linux-image-generic"
 
 	apt -y full-upgrade
 	# check for success
