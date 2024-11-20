@@ -128,15 +128,15 @@ fi
 # only install if it is not already installed.
 # there could be multiple runs of this fiile
 
-VERSION=`cat /isoimage/kernelversion.txt`
-dpkg-query -W linux-image-${VERSION}
-if test $? != 0; then
-	apt install linux-image-${VERSION}-generic linux-modules-${VERSION}-generic linux-headers-${VERSION} linux-modules-extra-${VERSION}-generic -y
+#VERSION=`cat /isoimage/kernelversion.txt`
+#dpkg-query -W linux-image-${VERSION}
+#if test $? != 0; then
+#	apt install linux-image-${VERSION}-generic linux-modules-${VERSION}-generic linux-headers-${VERSION} linux-modules-extra-${VERSION}-generic -y
 
 	# also hold these packages so they do
 	# not get upgraded
-	apt-mark hold linux-image-${VERSION}-generic linux-modules-${VERSION}-generic linux-headers-${VERSION} linux-modules-extra-${VERSION}-generic
-fi
+#	apt-mark hold linux-image-${VERSION}-generic linux-modules-${VERSION}-generic linux-headers-${VERSION} linux-modules-extra-${VERSION}-generic
+#fi
 
 # make the directories for /mnt
 editfstab -d
