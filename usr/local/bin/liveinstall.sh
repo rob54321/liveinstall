@@ -54,7 +54,7 @@ editfstabservice() {
 	ExecStart=/usr/bin/perl /usr/local/bin/editfstab -e
 
 	[Install]
-	WantedBy=graphical.target" > /etc/systemd/system/editfstab.service
+	WantedBy=multi-user.target" > /etc/systemd/system/editfstab.service
 
 	# set mode for init-rpi.service
 	chmod 0644 /etc/systemd/system/editfstab.service
