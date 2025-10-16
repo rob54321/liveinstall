@@ -107,15 +107,23 @@ fi
 # run from liveinstall
 if ! test -f /dochroot/init-linux; then
 	echo "======================================================================================"
-	echo "running init-linux -L"
+	echo "running init-linux"
 	echo "======================================================================================"
-	/usr/local/bin/init-linux -L
+	# check if -g option was used
+	if test  "${TARGET}" = "multi-user.target"; then
+		# select multi-user.target (default) no -g option
+		/usr/local/bin/init-linux -L
+	else
+		# select graphical.target
+		/usr/local/bin/init-linux -L -g
+	fi
+
 	# check return status
 	RC=$?
 
 	test ${RC} -eq 0 || exitonerror ${RC} "init-linux exited with error"
 	echo "======================================================================================"
-	echo "finished running init-linux -L"
+	echo "finished running init-linux"
 	echo "======================================================================================"
 
 else
@@ -216,8 +224,6 @@ fi
 ######################################################################
 # systemctl set-default is in init-linux which is run from makelive.pl
 ######################################################################
-# set boot to command line
-# systemctl set-default multi-user.target
 
 # setup console fonts
 sed -i -e 's/^FONTFACE=.*/FONTFACE=\"Terminus\"/' /etc/default/console-setup
