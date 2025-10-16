@@ -54,7 +54,7 @@ editfstabservice() {
 	ExecStart=/usr/bin/perl /usr/local/bin/editfstab -e
 
 	[Install]
-	WantedBy=multi-user.target" > /etc/systemd/system/editfstab.service
+	WantedBy=${TARGET}" > /etc/systemd/system/editfstab.service
 
 	# set mode for init-rpi.service
 	chmod 0644 /etc/systemd/system/editfstab.service
@@ -64,19 +64,24 @@ editfstabservice() {
 }
 usage() {
 echo "-u for upgrade"
+echo "-g set graphical.target, default is multi-user.target"
 echo "-p package list; p1 p2 .."
+echo "-h this help message"
 exit 0;
 }
 
 # main entry point
+# set default target
+TARGET="multi-user.target"
 export LC_ALL=C
 PACKAGES="";
 UPGRADE="";
 
-while getopts up:h opt
+while getopts gup:h opt
 do
 	case ${opt} in
 		u) UPGRADE="upgrade";;
+		g) TARGET="graphical.target";;
 		p) PACKAGES="${OPTARG}";;
 		h) usage;;
 		\?) usage;;
