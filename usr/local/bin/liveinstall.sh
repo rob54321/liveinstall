@@ -88,6 +88,9 @@ do
 	esac
 done
 
+echo "++++++++++++++++++++++++++++++PACKAGE LIST++++++++++++++++++++++++++++++++++++"
+echo "+++++++++++++++++++++++++++++++${PACKAGES}+++"
+echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 
 # make the directory /dochroot to indicate
 # a do chroot was done.
