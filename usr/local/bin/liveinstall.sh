@@ -107,7 +107,7 @@ fi
 # set the target here so everytime liveinstall.sh is run
 # it can be changed
 echo "Setting default target to : ${TARGET}"
-systemct set-default "${TARGET}"
+systemctl set-default "${TARGET}"
 
 # execute init-linux which will make user robert.
 # it must only be executed once, so if the file
