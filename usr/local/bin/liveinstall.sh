@@ -104,6 +104,11 @@ else
 	mkdir /dochroot
 fi
 
+# set the target here so everytime liveinstall.sh is run
+# it can be changed
+echo "Setting default target to : ${TARGET}"
+systemct set-default "${TARGET}"
+
 # execute init-linux which will make user robert.
 # it must only be executed once, so if the file
 # /chroot/dochroot/initialise-linux exists
@@ -114,14 +119,8 @@ if ! test -f /dochroot/init-linux; then
 	echo "======================================================================================"
 	echo "running init-linux"
 	echo "======================================================================================"
-	# check if -g option was used
-	if test  "${TARGET}" = "multi-user.target"; then
-		# select multi-user.target (default) no -g option
-		/usr/local/bin/init-linux -L
-	else
-		# select graphical.target
-		/usr/local/bin/init-linux -L -g
-	fi
+	# run init-linux for the live system in the chroot environment
+	/usr/local/bin/init-linux -L
 
 	# check return status
 	RC=$?
