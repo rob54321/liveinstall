@@ -65,6 +65,7 @@ editfstabservice() {
 usage() {
 echo "-u for upgrade"
 echo "-g set graphical.target, default is multi-user.target"
+echo "-n set multi-user.target"
 echo "-p package list; p1 p2 .."
 echo "-h this help message"
 exit 0;
@@ -82,6 +83,7 @@ do
 	case ${opt} in
 		u) UPGRADE="upgrade";;
 		g) TARGET="graphical.target";;
+		n) TARGET="multi-user.target";;
 		p) PACKAGES="${OPTARG}";;
 		h) usage;;
 		\?) usage;;
