@@ -78,7 +78,7 @@ export LC_ALL=C
 PACKAGES="";
 UPGRADE="";
 
-while getopts gup:h opt
+while getopts gnup:h opt
 do
 	case ${opt} in
 		u) UPGRADE="upgrade";;
