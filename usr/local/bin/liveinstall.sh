@@ -111,32 +111,32 @@ fi
 echo "Setting default target to : ${TARGET}"
 systemctl set-default "${TARGET}"
 
-# execute init-linux which will make user robert.
+# execute init-live which will make user robert.
 # it must only be executed once, so if the file
 # /chroot/dochroot/initialise-linux exists
-# init-linux has already been run
-# the -L switch is to indicate init-linux is being
+# init-live has already been run
+# the -L switch is to indicate init-live is being
 # run from liveinstall
-if ! test -f /dochroot/init-linux; then
+if ! test -f /dochroot/init-live; then
 	echo "======================================================================================"
-	echo "running init-linux"
+	echo "running init-live"
 	echo "======================================================================================"
-	# run init-linux for the live system in the chroot environment
-	/usr/local/bin/init-linux -L
+	# run init-live for the live system in the chroot environment
+	/usr/local/bin/init-live -L
 
 	# check return status
 	RC=$?
 
-	test ${RC} -eq 0 || exitonerror ${RC} "init-linux exited with error"
+	test ${RC} -eq 0 || exitonerror ${RC} "init-live exited with error"
 	echo "======================================================================================"
-	echo "finished running init-linux"
+	echo "finished running init-live"
 	echo "======================================================================================"
 
 else
-	# /dochroot/init-linux exists
-	# init-linux has already run
+	# /dochroot/init-live exists
+	# init-live has already run
 	echo "======================================================================================"
-	echo "init-linux has already been run"
+	echo "init-live has already been run"
 	echo "======================================================================================"
 fi
 
@@ -228,7 +228,7 @@ fi
 # rm -v -f /boot/initrd.img-*-generic
 
 ######################################################################
-# systemctl set-default is in init-linux which is run from makelive.pl
+# systemctl set-default is in init-live which is run from makelive.pl
 ######################################################################
 
 # setup console fonts
